@@ -19,16 +19,16 @@
 
 .clicked-coord-label {
     position: absolute;
-    left: 10px;
-    right: 10px;
+    top: .5em;
+    right: .5em;
     font-size: 13px;
-    width: auto;
+    padding: 2px;
 }
 
 .clicked-coord-label p {
-    padding: 0px;
-    margin: -25px 0px;
     position: absolute;
+    margin: 0px -130px;
     border: 1px solid #3344333d;
     background: #ffffff4a;
+    z-index: 1;
 }

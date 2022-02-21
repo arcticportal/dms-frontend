@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Map from 'ol/Map';
 import View from 'ol/View';
 import { transform } from 'ol/proj';
-import {toStringXY} from 'ol/coordinate';
+import { toStringXY } from 'ol/coordinate';
 import MapContext from "./MapContext";
 import "./MapWrapper.css";
 
@@ -65,9 +65,9 @@ const MapWrapper = ({ children, zoom, center }) => {
 		<MapContext.Provider value={{ map }}>
 			<div ref={mapRef} className="ol-map">
 				{children}
-			</div>
-			<div className="clicked-coord-label">
-				<p>{(selectedCoord) ? toStringXY(selectedCoord, 5) : ''}</p>
+				<div className="clicked-coord-label">
+					<p>{(selectedCoord) ? toStringXY(selectedCoord, 5) : ''}</p>
+				</div>
 			</div>
 		</MapContext.Provider>
 
