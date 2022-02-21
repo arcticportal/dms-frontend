@@ -1,18 +1,22 @@
-import './App.css';
+import React, { useState } from 'react';
 import { ApolloClient, InMemoryCache, ApolloProvider, HttpLink, from } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
-
-// react
-import React, { useState } from 'react';
+// import { fromLonLat } from "ol/proj";
 
 // components
-import MapWrapper from './components/MapWrapper'
-import GetAirports from './components/apollo/GetAirports';
+import MapWrapper from './ol-map/map-context/MapWrapper'
+import GetAirports from './graphql/airports/GetAirports';
+import { Controls, FullScreenControl } from "./ol-map/controls";
+import { Layers, TileLayer } from './ol-map/layers';
+import { osm } from "./ol-map/source";
+import './App.css';
+
 
 const errorLink = onError(({ graphqlErrors, networkError }) => {
   if (graphqlErrors) {
     graphqlErrors.map(({ message, location, path }) => {
       alert(`Graphql error ${message}`);
+      return { location }
     });
   }
 });
@@ -27,23 +31,30 @@ const client = new ApolloClient({
   link: link,
 })
 
-function App() {
-
+const App = () => {
   // set initial state
-  const [features, setFeatures] = useState([])
+  const [center, setCenter] = useState([-2012970.97, 9783629.87]);
+  const [zoom, setZoom] = useState(5);
 
 
   return (
-    <ApolloProvider client={client}>
-      {" "}
-      <GetAirports />
-      <div className="App">
-
-        <MapWrapper features={features} />
-
-      </div>
-    </ApolloProvider>
-  )
+    // <div>
+    //   <ApolloProvider client={client}>
+    //     {" "}
+    //     <GetAirports />
+    //   </ApolloProvider>
+    <div className="App">
+      <MapWrapper center={center} zoom={zoom}>
+        <Layers>
+          <TileLayer source={osm()} zIndex={0} />
+        </Layers>
+        <Controls>
+          <FullScreenControl />
+        </Controls>
+      </MapWrapper>
+    </div>
+    // </div>
+  );
 }
 
 export default App

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useQuery } from '@apollo/client'
-import { LOAD_AIRPORTS } from '../../graphql/Queries'
+import { LOAD_AIRPORTS } from './Queries'
 
 function GetAirports() {
 
