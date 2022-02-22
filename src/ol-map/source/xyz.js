@@ -1,7 +1,7 @@
-import * as olSource from "ol/source";
+import XYZ from "ol/source/XYZ";
 
 function xyz({ url, attributions, maxZoom }) {
-	return new olSource.XYZ({ url, attributions, maxZoom });
+	return new XYZ({ url, attributions, maxZoom });
 }
 
 export default xyz;

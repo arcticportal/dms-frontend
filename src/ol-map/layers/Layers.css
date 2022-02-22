@@ -1,0 +1,14 @@
+.layer-picker{
+    position: absolute;
+    right: 0.5em;
+    top: 2.5em;
+    z-index: 1;
+    background: #ffffff3b;
+    border: 1px solid #0000000d;
+    padding: 5px;
+    font-size: 13px;
+}
+
+.layer-picker p {
+    margin: 5px;
+}
