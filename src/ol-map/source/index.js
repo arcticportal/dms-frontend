@@ -1,7 +1,9 @@
-import xyz from "./xyz";
-import osm from "./osm";
+import XYZ from "./XYZ";
+import OSM from "./OSM";
+import VectorSource from "./VectorSource";
 
 export {
-	xyz,
-	osm
+	XYZ,
+	OSM,
+	VectorSource
 };

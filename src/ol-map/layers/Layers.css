@@ -3,8 +3,9 @@
     right: 0.5em;
     top: 2.5em;
     z-index: 1;
-    background: #ffffff3b;
-    border: 1px solid #0000000d;
+    background: #ffffff8e;
+    border: 1px solid #0000003f;
+    border-radius: 5px;
     padding: 5px;
     font-size: 13px;
 }

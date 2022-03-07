@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
-import MapContext from "../map-context/MapContext";
+import MapContext from "../MapContext";
 import OLTileLayer from "ol/layer/Tile";
-import { osm, xyz } from "../source";
+import { OSM, XYZ } from "../source";
 import './Layers.css'
 
 
@@ -11,13 +11,13 @@ const TileLayer = ({ source, zIndex = 0 }) => {
 	const [pickedLayer, setPickedLayer] = useState("openStreetMapStandard");
 
 	if (pickedLayer === "openStreetMapStandard") {
-		source = osm()
+		source = OSM()
 	} if (pickedLayer === "satelliteLayer") {
-		source = xyz({ url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}.png" })
+		source = XYZ({ url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}.png" })
 	} if (pickedLayer === "stamenTerrain") {
-		source = xyz({ url: "https://stamen-tiles.a.ssl.fastly.net/terrain/{z}/{x}/{y}.jpg" })
+		source = XYZ({ url: "https://stamen-tiles.a.ssl.fastly.net/terrain/{z}/{x}/{y}.jpg" })
 	} if (pickedLayer === "monochromeLayer") {
-		source = xyz({ url: "https://stamen-tiles.a.ssl.fastly.net/toner/{z}/{x}/{y}.png" })
+		source = XYZ({ url: "https://stamen-tiles.a.ssl.fastly.net/toner/{z}/{x}/{y}.png" })
 	} else { }
 
 	const handleChange = (e) => {

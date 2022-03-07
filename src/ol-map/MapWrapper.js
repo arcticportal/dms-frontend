@@ -12,7 +12,7 @@ import "./MapWrapper.css";
 const MapWrapper = ({ children, zoom, center }) => {
 	const mapRef = useRef();
 	const [map, setMap] = useState(null);
-	const [selectedCoord, setSelectedCoord] = useState();
+	const [selectedCoord, setSelectedCoord] = useState(null);
 
 	const mapElement = useRef()
 	mapElement.current = map
@@ -37,22 +37,22 @@ const MapWrapper = ({ children, zoom, center }) => {
 
 	// zoom change handler
 	useEffect(() => {
-		if (!map) return;
+		if (!mapElement.current) return;
 
-		map.getView().setZoom(zoom);
+		mapElement.current.getView().setZoom(zoom);
 	}, [zoom]);
 
 	// center change handler
 	useEffect(() => {
-		if (!map) return;
+		if (!mapElement.current) return;
 
-		map.getView().setCenter(center)
+		mapElement.current.getView().setCenter(center)
 	}, [center])
 
-	const handleMapClick = (event) => {
+	const handleMapClick = (e) => {
 		// get clicked coordinate using mapRef to access current React state inside OpenLayers callback
 		//  https://stackoverflow.com/a/60643670
-		const clickedCoord = mapElement.current.getCoordinateFromPixel(event.pixel);
+		const clickedCoord = mapElement.current.getCoordinateFromPixel(e.pixel);
 
 		// transform coord to EPSG 4326 standard Lat Long
 		const transormedCoord = transform(clickedCoord, 'EPSG:3857', 'EPSG:4326')
