@@ -5,7 +5,7 @@ import { fromLonLat } from "ol/proj";
 
 // components
 import MapWrapper from './ol-map/MapWrapper';
-import { Controls, FullScreenControl } from "./ol-map/controls";
+import { Controls, FullScreenControl, ShowCoordinates } from "./ol-map/controls";
 import { Layers, TileLayer, VectorLayer } from './ol-map/layers';
 import { OSM, VectorSource } from "./ol-map/source";
 import Feature from 'ol/Feature';
@@ -70,6 +70,7 @@ const App = () => {
                         <VectorLayer source={VectorSource({ features })} zIndex={10} />
                     </Layers>
                     <Controls>
+                        <ShowCoordinates />
                         <FullScreenControl />
                     </Controls>
                 </MapWrapper>

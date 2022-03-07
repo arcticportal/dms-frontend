@@ -3,8 +3,6 @@ import React, { useState, useEffect, useRef } from 'react';
 // openlayers
 import Map from 'ol/Map';
 import View from 'ol/View';
-import { transform } from 'ol/proj';
-import { toStringXY } from 'ol/coordinate';
 import MapContext from "./MapContext";
 import "./MapWrapper.css";
 
@@ -12,8 +10,6 @@ import "./MapWrapper.css";
 const MapWrapper = ({ children, zoom, center }) => {
 	const mapRef = useRef();
 	const [map, setMap] = useState(null);
-	const [selectedCoord, setSelectedCoord] = useState(null);
-
 	const mapElement = useRef()
 	mapElement.current = map
 
@@ -28,7 +24,6 @@ const MapWrapper = ({ children, zoom, center }) => {
 		};
 
 		let mapObject = new Map(options);
-		mapObject.on('click', handleMapClick)
 		mapObject.setTarget(mapRef.current);
 		setMap(mapObject);
 
@@ -49,25 +44,11 @@ const MapWrapper = ({ children, zoom, center }) => {
 		mapElement.current.getView().setCenter(center)
 	}, [center])
 
-	const handleMapClick = (e) => {
-		// get clicked coordinate using mapRef to access current React state inside OpenLayers callback
-		//  https://stackoverflow.com/a/60643670
-		const clickedCoord = mapElement.current.getCoordinateFromPixel(e.pixel);
-
-		// transform coord to EPSG 4326 standard Lat Long
-		const transormedCoord = transform(clickedCoord, 'EPSG:3857', 'EPSG:4326')
-
-		// set React state
-		setSelectedCoord(transormedCoord)
-	}
 
 	return (
 		<MapContext.Provider value={{ map }}>
 			<div ref={mapRef} className="ol-map">
 				{children}
-				<div className="clicked-coord-label">
-					<p>{(selectedCoord) ? toStringXY(selectedCoord, 5) : ''}</p>
-				</div>
 			</div>
 		</MapContext.Provider>
 
