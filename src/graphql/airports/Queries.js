@@ -6,7 +6,6 @@ query {
       name
       iataCode
       state
-      id
       gpsCode
       point
       url

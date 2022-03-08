@@ -5,6 +5,7 @@ import { fromLonLat } from "ol/proj";
 
 // components
 import MapWrapper from './ol-map/MapWrapper';
+import { SidebarLeft, ShowAirports } from './ol-map/left-sidebar';
 import { Controls, FullScreenControl, ShowCoordinates } from "./ol-map/controls";
 import { Layers, TileLayer, VectorLayer } from './ol-map/layers';
 import { OSM, VectorSource } from "./ol-map/source";
@@ -41,39 +42,41 @@ const App = () => {
     const [center, setCenter] = useState([-2012970.97, 9783629.87]);
     const [zoom, setZoom] = useState(5);
 
-    var feature = new Feature({
-        geometry: new Point(fromLonLat([-18.0709, 65.657])),
-    });
-    const olstyle = new Style({
-        image: new Icon({
-            anchorXUnits: "fraction",
-            anchorYUnits: "pixels",
-            src: "https://cdn2.iconfinder.com/data/icons/social-media-and-payment/64/-47-64.png",
-        }),
-    })
+    // var feature = new Feature({
+    //     geometry: new Point(fromLonLat([-18.0709, 65.657])),
+    // });
+    // const olstyle = new Style({
+    //     image: new Icon({
+    //         anchorXUnits: "fraction",
+    //         anchorYUnits: "pixels",
+    //         src: "https://cdn2.iconfinder.com/data/icons/social-media-and-payment/64/-47-64.png",
+    //     }),
+    // })
     // feature.setStyle(olstyle)
 
-    var [features, setFeatures] = useState([feature])
+    // var [features, setFeatures] = useState([feature])
 
 
     return (
         <div>
             <div className="App">
-                <MapWrapper center={center} zoom={zoom}>
-                    <Layers>
-                        <TileLayer source={OSM()} />
-                        {/* <ApolloProvider client={client}>
-                            {" "}
-                            <GetAirports />
-                        </ApolloProvider> */}
+                <ApolloProvider client={client}>
+                    <MapWrapper center={center} zoom={zoom}>
+                        <SidebarLeft>
+                            <ShowAirports />
+                        </SidebarLeft>
+                        <Layers>
+                            <TileLayer />
 
-                        <VectorLayer source={VectorSource({ features })} zIndex={10} />
-                    </Layers>
-                    <Controls>
-                        <ShowCoordinates />
-                        <FullScreenControl />
-                    </Controls>
-                </MapWrapper>
+
+                            {/* <VectorLayer source={VectorSource({ features })} zIndex={10} /> */}
+                        </Layers>
+                        <Controls>
+                            <ShowCoordinates />
+                            <FullScreenControl />
+                        </Controls>
+                    </MapWrapper>
+                </ApolloProvider>
             </div>
         </div>
     );
