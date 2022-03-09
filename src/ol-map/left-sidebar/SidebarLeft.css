@@ -42,3 +42,11 @@
 .sidebar-block a:hover {
     color: #aad3df;
 }
+
+.hidden{
+    visibility: hidden;
+}
+
+.visible{
+    visibility: visible;
+}

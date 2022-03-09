@@ -58,7 +58,7 @@ const SidebarLeft = ({ children }) => {
                 className="sidebar-block"
                 style={{ left: isSidebar ? '0' : '-260px' }}
             >
-                <a href="#">{children}</a>
+                {children}
             </div>
         </>
     );

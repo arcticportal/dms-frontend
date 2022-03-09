@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { useQuery } from '@apollo/client'
+import React, { useContext, useEffect, useState } from 'react';
+import { useLazyQuery } from '@apollo/client';
 import MapContext from "../MapContext";
-import { LOAD_AIRPORTS } from "../../graphql/airports/Queries.js"
+import { LOAD_AIRPORTS } from "../../graphql/airports/Queries.js";
 import Feature from "ol/Feature";
 import Point from "ol/geom/Point";
 import { fromLonLat } from "ol/proj";
@@ -22,26 +22,26 @@ function addMarkers(lonLatArray) {
 		});
 		return feature;
 	});
-	console.log(features)
+	console.log(features);
 	return features;
 }
 
 const ShowAirports = () => {
-	const { map } = useContext(MapContext)
-	const { error, loading, data } = useQuery(LOAD_AIRPORTS)
-	const [checked, setChecked] = useState(false)
-	const [vectorLayer, setVectorLayer] = useState({})
-
+	const { map } = useContext(MapContext);
+	const [getAirports, { error, loading, data }] = useLazyQuery(LOAD_AIRPORTS);
+	const [checked, setChecked] = useState(false);
+	const [visibility, setVisibility] = useState(true)
+	const [vectorLayer, setVectorLayer] = useState({});
 
 	useEffect(() => {  // update screen when representation or check changed
-		if (!map || !checked) return
-		map.addLayer(vectorLayer)
-		vectorLayer.setZIndex(10)
-		console.log('addLayer')
+		if (!map || !checked) return;
+		map.addLayer(vectorLayer);
+		vectorLayer.setZIndex(10);
+		console.log('addLayer');
 		return () => {
 			if (map) {
 				map.removeLayer(vectorLayer);
-				console.log('cleanup')
+				console.log('cleanup');
 			}
 		}
 	}, [vectorLayer, checked])
@@ -54,21 +54,30 @@ const ShowAirports = () => {
 					features: addMarkers(convertData(data.airports))
 				})
 			})
-		)
-	}, [data])
+		);
+	}, [data]);
 
-	if (loading) return <p>Loading...</p>;
+	if (loading) return <p>Loading... Icelandic airports</p>;
 	if (error) return <p>Error :(</p>;
 	return (
-		<>
+		<a>
 			<input
 				type="checkbox"
 				checked={checked}
 				onChange={e => setChecked(e.target.checked)}
+				className={visibility ? "hidden" : "visible"}
 			/>
+			<button
+				onClick={() => {getAirports({}); setVisibility(false)}}
+				className={visibility ? "visible" : "hidden"}
+			>
+				Fetch
+			</button>
+
 			{" "}
-			Iceland airports
-		</>
+			Icelandic airports
+			{" "}
+		</a>
 	);
 }
 
