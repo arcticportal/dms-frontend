@@ -23,10 +23,7 @@
 
 .sidebar-block {
     position: absolute;
-    left: 0.5em;
-    top: 4em;
     z-index: 1;
-    left: 0;
     height: 100%;
     width: 255px;
     background: white;

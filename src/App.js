@@ -1,19 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ApolloClient, InMemoryCache, ApolloProvider, HttpLink, from } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
-import { fromLonLat } from "ol/proj";
-
-// components
 import MapWrapper from './ol-map/MapWrapper';
 import { SidebarLeft, ShowAirports } from './ol-map/left-sidebar';
 import { Controls, FullScreenControl, ShowCoordinates } from "./ol-map/controls";
-import { Layers, TileLayer, VectorLayer } from './ol-map/layers';
-import { OSM, VectorSource } from "./ol-map/source";
-import Feature from 'ol/Feature';
-import Polygon from 'ol/geom/Polygon';
-import Point from 'ol/geom/Point';
-import { Style, Icon } from "ol/style";
-import { GetAirports } from "./graphql/airports";
+import { Layers, TileLayer } from './ol-map/layers';
 import './App.css';
 
 // apollo 
@@ -39,23 +30,8 @@ const client = new ApolloClient({
 
 const App = () => {
     // set initial state
-    const [center, setCenter] = useState([-2012970.97, 9783629.87]);
-    const [zoom, setZoom] = useState(5);
-
-    // var feature = new Feature({
-    //     geometry: new Point(fromLonLat([-18.0709, 65.657])),
-    // });
-    // const olstyle = new Style({
-    //     image: new Icon({
-    //         anchorXUnits: "fraction",
-    //         anchorYUnits: "pixels",
-    //         src: "https://cdn2.iconfinder.com/data/icons/social-media-and-payment/64/-47-64.png",
-    //     }),
-    // })
-    // feature.setStyle(olstyle)
-
-    // var [features, setFeatures] = useState([feature])
-
+    const center = [-2012970.97, 9783629.87];
+    const zoom = 5;
 
     return (
         <div>
@@ -67,9 +43,6 @@ const App = () => {
                         </SidebarLeft>
                         <Layers>
                             <TileLayer />
-
-
-                            {/* <VectorLayer source={VectorSource({ features })} zIndex={10} /> */}
                         </Layers>
                         <Controls>
                             <ShowCoordinates />

@@ -40,7 +40,7 @@ const TileLayer = ({ source, zIndex = 0 }) => {
 				map.removeLayer(tileLayer);
 			}
 		};
-	}, [map, pickedLayer]);
+	}, [map, source]);
 
 	return (
 		<div className="layer-picker">

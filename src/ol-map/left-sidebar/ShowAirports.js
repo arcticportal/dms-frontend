@@ -5,8 +5,6 @@ import { LOAD_AIRPORTS } from "../../graphql/airports/Queries.js"
 import Feature from "ol/Feature";
 import Point from "ol/geom/Point";
 import { fromLonLat } from "ol/proj";
-import { Layers, TileLayer, VectorLayer } from '../layers';
-import { OSM, VectorSource } from "../source";
 import OLVectorLayer from "ol/layer/Vector";
 import { Vector as OLVectorSource } from 'ol/source';
 
@@ -29,39 +27,47 @@ function addMarkers(lonLatArray) {
 }
 
 const ShowAirports = () => {
-	const { map } = useContext(MapContext);
-
+	const { map } = useContext(MapContext)
 	const { error, loading, data } = useQuery(LOAD_AIRPORTS)
-	const [airports, setAirports] = useState([]);
-	const [features, setFeatures] = useState([]);
-	const [checked, setChecked] = useState(false);
-	let vectorLayer = {}
+	const [checked, setChecked] = useState(false)
+	const [representation, setRepresentation] = useState({})
 
-	useEffect(() => {
-		if (data) {
-			setAirports(convertData(data.airports))
-			setFeatures(addMarkers(airports))
-		}
-	}, [data, checked])
+	function addLayer(map, lay) {
+		map.addLayer(lay); lay.setZIndex(10)
+		return () => { if (map) { map.removeLayer(lay); console.log('cleanup')} }
+	}
 
+	useEffect(() => {  // update screen when check toggled
+		if (!map) return
+		var lay = representation.vectorLayer
+		if (!checked) { return () => { console.log('hello')}}
+		return addLayer(map, lay)
+	}, [checked])
 
-	useEffect(() => {
-		if (!map) return;
-		if (checked) {
-			vectorLayer = new OLVectorLayer({
-				source: new OLVectorSource({ features }),
-			});
-			map.addLayer(vectorLayer);
-			vectorLayer.setZIndex(10);
-		} else { vectorLayer = {}}
-		return () => {
-			if (map) {
-				map.removeLayer(vectorLayer);
-			}
-		};
-	}, [map, features]);
+	useEffect(() => {  // update screen when repr changed
+		if (!map || !checked) return
+		var prev = representation.previousLayer
+		if (prev) map.removeLayer(prev)
+		return addLayer(map, representation.vectorLayer)
+		// return () => {
+		// 	if (map) {
+		// 		map.removeLayer(prev)
+		// 	}
+		// }
+	}, [representation])
 
-	// console.log(airports)
+	useEffect(() => {  // update representation
+		if (!data) return
+		setRepresentation({
+			previousLayer: representation.vectorLayer,
+			vectorLayer: new OLVectorLayer({
+				source: new OLVectorSource({
+					features: addMarkers(convertData(data.airports))
+				})
+			})
+		})
+	}, [data])
+
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>Error :(</p>;
 	return (
@@ -74,20 +80,61 @@ const ShowAirports = () => {
 			{" "}
 			Iceland airports
 		</>
-
 	);
-	// const { map } = useContext(MapContext);
+}
 
-	// useEffect(() => {
-	// 	if (!map) return;
+// const ShowAirports = () => {
+// 	const { map } = useContext(MapContext);
 
-	// 	let fullScreenControl = new FullScreen({});
+// 	const { error, loading, data } = useQuery(LOAD_AIRPORTS)
+// 	const [airports, setAirports] = useState([]);
+// 	const [features, setFeatures] = useState([]);
+// 	const [checked, setChecked] = useState(false);
+// 	console.log(data)
 
-	// 	map.controls.push(fullScreenControl);
 
-	// 	return () => map.controls.remove(fullScreenControl);
-	// }, [map]);
+// 	useEffect(() => {
+// 		if (data && checked) {
+// 			setAirports(convertData(data.airports))
+// 		}
+// 	}, [data, checked])
 
-};
+// 	useEffect(() => {
+// 		if (airports.length) {
+// 			setFeatures(addMarkers(airports))
+// 		}
+// 	}, [airports])
+
+// 	useEffect(() => {
+// 		let vectorLayer = {}
+// 		if (!map) return;
+// 		if (checked) {
+// 			vectorLayer = new OLVectorLayer({
+// 				source: new OLVectorSource({ features }),
+// 			});
+// 			map.addLayer(vectorLayer);
+// 			vectorLayer.setZIndex(10);
+// 		}
+// 		return () => {
+// 			if (map) {
+// 				map.removeLayer(vectorLayer);
+// 			}
+// 		};
+// 	}, [checked, features]);
+
+// 	if (loading) return <p>Loading...</p>;
+// 	if (error) return <p>Error :(</p>;
+// 	return (
+// 		<>
+// 			<input
+// 				type="checkbox"
+// 				checked={checked}
+// 				onChange={e => setChecked(e.target.checked)}
+// 			/>
+// 			{" "}
+// 			Iceland airports
+// 		</>
+// 	);
+// };
 
 export default ShowAirports;
