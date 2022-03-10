@@ -2,7 +2,7 @@ import React from 'react';
 import { ApolloClient, InMemoryCache, ApolloProvider, HttpLink, from } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
 import MapWrapper from './ol-map/MapWrapper';
-import { SidebarLeft, ShowAirports } from './ol-map/left-sidebar';
+import { SidebarLeft, ShowAirports, GetCountriesByName } from './ol-map/left-sidebar';
 import { Controls, FullScreenControl, ShowCoordinates } from "./ol-map/controls";
 import { Layers, TileLayer } from './ol-map/layers';
 import './App.css';
@@ -40,6 +40,7 @@ const App = () => {
                     <MapWrapper center={center} zoom={zoom}>
                         <SidebarLeft>
                             <ShowAirports />
+                            <GetCountriesByName />
                         </SidebarLeft>
                         <Layers>
                             <TileLayer />
