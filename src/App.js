@@ -2,9 +2,12 @@ import React from 'react';
 import { ApolloClient, InMemoryCache, ApolloProvider, HttpLink, from } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
 import MapWrapper from './ol-map/MapWrapper';
-import { SidebarLeft, ShowAirports, GetCountriesByName } from './ol-map/left-sidebar';
+import { SidebarLeft, ShowAirports, GetCountriesByName, GetFilteredData } from './ol-map/left-sidebar';
 import { Controls, FullScreenControl, ShowCoordinates } from "./ol-map/controls";
 import { Layers, TileLayer } from './ol-map/layers';
+import { GET_COUNTRIES_ID_BY_NAME, GET_STATES_ID_BY_NAME } from "./graphql/queries/GetCountries";
+import { GET_AIRPORTS_IN_COUNTRY, GET_AIRPORTS_IN_STATE } from './graphql/queries/GetAirports';
+import { GET_CITIES_IN_COUNTRY, GET_CITIES_IN_STATE } from './graphql/queries/GetCities';
 import './App.css';
 
 // apollo 
@@ -41,6 +44,16 @@ const App = () => {
                         <SidebarLeft>
                             <ShowAirports />
                             <GetCountriesByName />
+                            <GetFilteredData
+                                datasetName={"Search airports in state:"}
+                                filterQuery={GET_STATES_ID_BY_NAME}
+                                resultQuery={GET_AIRPORTS_IN_STATE}
+                            />
+                            <GetFilteredData
+                                datasetName={"Search cities in country:"}
+                                filterQuery={GET_COUNTRIES_ID_BY_NAME}
+                                resultQuery={GET_CITIES_IN_COUNTRY}
+                            />
                         </SidebarLeft>
                         <Layers>
                             <TileLayer />

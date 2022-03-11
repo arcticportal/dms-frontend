@@ -1,7 +1,9 @@
 import GetAirports from "./GetAirports";
-import { LOAD_AIRPORTS } from "./Queries";
+import GetCities from "./GetCities.js";
+import GetCountries from "./GetCountries.js"
 
 export {
 	GetAirports,
-    LOAD_AIRPORTS,
+    GetCities,
+    GetCountries,
 }

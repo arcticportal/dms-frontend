@@ -72,7 +72,9 @@ const ShowAirports = () => {
 	if (loading) return <p>Loading... Icelandic airports</p>;
 	if (error) return <p>Error :(</p>;
 	return (
-		<a>
+		<p>
+
+			<span>Icelandic airports:</span>
 			<input
 				type="checkbox"
 				checked={checked}
@@ -86,10 +88,8 @@ const ShowAirports = () => {
 				Fetch
 			</button>
 
-			{" "}
-			Icelandic airports
-			{" "}
-		</a>
+
+		</p>
 	);
 }
 

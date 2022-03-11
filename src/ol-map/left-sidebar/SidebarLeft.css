@@ -30,12 +30,10 @@
     transition: all .35s ease-out;
 }
 
-.sidebar-block a {
-    display: flex;
-    align-content: flex-start;
+.sidebar-block p {
+    display: block;
     text-decoration: none;
-    color: rgba(0, 0, 0, 0.9);
-    padding: 1rem 1.5rem;
+    padding: 0.5rem 0.5rem 0.5rem 1rem;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
@@ -49,4 +47,17 @@
 
 .visible{
     visibility: visible;
+}
+
+.suggestion {
+    cursor: pointer;
+    border-right: 1px solid #58585826;
+    border-left: 1px solid #58585826;
+    border-bottom: 1px solid #58585826;
+    padding: 2px;
+}
+
+.suggestion:hover {
+    color:rgb(0, 79, 143);
+    background-color: rgb(240, 240, 240)
 }
