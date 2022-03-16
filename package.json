@@ -42,6 +42,7 @@
     ]
   },
   "devDependencies": {
-    "copy-webpack-plugin": "^10.2.4"
+    "copy-webpack-plugin": "^10.2.4",
+    "html-webpack-plugin": "^5.5.0"
   }
 }

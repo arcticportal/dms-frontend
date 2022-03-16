@@ -8,12 +8,11 @@ import Map from 'ol/Map';
 import View from 'ol/View';
 import MapContext from "./MapContext";
 import * as Cesium from 'cesium';
-import "../../node_modules/cesium/Build/Cesium/Widgets/widgets.css";
+// import "../../node_modules/cesium/Build/Cesium/Widgets/widgets.css";
 
 
-
-// window.CESIUM_BASE_URL = '../node_modules/cesium/Build/Cesium/';
-window.Cesium = Cesium
+// window.CESIUM_BASE_URL = Cesium;
+// window.Cesium = Cesium
 
 const MapWrapper = ({ children, zoom, center }) => {
 	const mapRef = useRef();
@@ -40,7 +39,6 @@ const MapWrapper = ({ children, zoom, center }) => {
 			controls: [],
 			overlays: []
 		};
-
 		let mapObject = new Map(options);
 		mapObject.setTarget(mapRef.current);
 		setMap(mapObject);
@@ -48,6 +46,7 @@ const MapWrapper = ({ children, zoom, center }) => {
 		console.log(ol3d)
 		return () => {mapObject.setTarget(undefined); setOl3d(null);}
 	}, []);
+
 
 	// zoom change handler
 	useEffect(() => {

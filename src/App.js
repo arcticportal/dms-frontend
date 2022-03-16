@@ -10,11 +10,6 @@ import { GET_AIRPORTS_IN_COUNTRY, GET_AIRPORTS_IN_STATE } from './graphql/querie
 import { GET_CITIES_IN_COUNTRY, GET_CITIES_IN_STATE } from './graphql/queries/GetCities';
 import './App.css';
 
-// import "../node_modules/cesium/Build/Cesium/Widgets/widgets.css";
-// import "../node_modules/cesium/Build/Cesium/";
-
-// window.CESIUM_BASE_URL = '../node_modules/cesium/Build/Cesium/Cesium.js';
-
 // apollo 
 const errorLink = onError(({ graphqlErrors, networkError }) => {
     if (graphqlErrors) {
