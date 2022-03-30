@@ -33,3 +33,10 @@
     background: #ffffff4a;
     z-index: 1;
 }
+
+.cesium-switch {
+    position: fixed;
+    top:1px;
+    left: 1px;
+    z-index: 5;
+}
