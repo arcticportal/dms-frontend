@@ -1,42 +1,42 @@
 .ol-map {
-    position: fixed;
-    min-width: 400px;
-    min-height: 400px;
-    height: 100%;
-    width: 100%;
+  position: fixed;
+  min-width: 400px;
+  min-height: 400px;
+  height: 100%;
+  width: 100%;
 }
 
 .ol-control {
-    position: absolute;
-    background-color: rgba(255,255,255,0.4);
-    border-radius: 4px;
-    padding: 2px;
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 4px;
+  padding: 2px;
 }
 
 .ol-full-screen {
-    bottom: .5em;
-    right: .5em;
+  bottom: 0.5em;
+  right: 0.5em;
 }
 
 .clicked-coord-label {
-    position: absolute;
-    top: .5em;
-    right: .5em;
-    font-size: 13px;
-    padding: 2px;
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  font-size: 13px;
+  padding: 2px;
 }
 
 .clicked-coord-label p {
-    position: absolute;
-    margin: 0px -150px;
-    border: 1px solid #3344333d;
-    background: #ffffff4a;
-    z-index: 1;
+  position: absolute;
+  margin: 0px -150px;
+  border: 1px solid #3344333d;
+  background: #ffffff4a;
+  z-index: 1;
 }
 
 .cesium-switch {
-    position: fixed;
-    top:1px;
-    left: 1px;
-    z-index: 5;
+  position: fixed;
+  top: 1px;
+  left: 1px;
+  z-index: 5;
 }

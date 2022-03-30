@@ -1,8 +1,8 @@
-import {gql} from '@apollo/client'
+import { gql } from "@apollo/client";
 
 export const LOAD_AIRPORTS = gql`
-query {
-    airports(filters: {country: {pk: 146}}) {
+  query {
+    airports(filters: { country: { pk: 146 } }) {
       name
       iataCode
       state
@@ -16,11 +16,11 @@ query {
       localCode
     }
   }
-`
+`;
 
 export const GET_AIRPORTS_IN_COUNTRY = gql`
-query ($pk: ID!){
-    airports(filters: {country: {pk: $pk}}) {
+  query ($pk: ID!) {
+    airports(filters: { country: { pk: $pk } }) {
       name
       iataCode
       state
@@ -34,11 +34,11 @@ query ($pk: ID!){
       localCode
     }
   }
-`
+`;
 
 export const GET_AIRPORTS_IN_STATE = gql`
-query ($pk: ID!){
-    airports(filters: {state: {pk: $pk}}) {
+  query ($pk: ID!) {
+    airports(filters: { state: { pk: $pk } }) {
       name
       iataCode
       state
@@ -52,4 +52,4 @@ query ($pk: ID!){
       localCode
     }
   }
-`
+`;
