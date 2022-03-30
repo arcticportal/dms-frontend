@@ -1,17 +1,14 @@
 import "./MapWrapper.css";
-import OLCesium from "olcs/OLCesium.js";
-// import OLCesium from 'ol-cesium';
+import OLCesium from "olcs/OLCesium";
 import React, { useState, useEffect, useRef } from "react";
 
 // openlayers
 import Map from "ol/Map";
 import View from "ol/View";
 import MapContext from "./MapContext";
-// import * as Cesium from 'cesium';
-// import "../../node_modules/cesium/Build/Cesium/Widgets/widgets.css";
+import * as Cesium from "cesium";
 
-// window.CESIUM_BASE_URL = Cesium;
-// window.Cesium = Cesium
+window.Cesium = Cesium;
 
 const MapWrapper = ({ children, zoom, center }) => {
   const mapRef = useRef();

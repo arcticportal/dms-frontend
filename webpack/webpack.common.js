@@ -1,11 +1,33 @@
 const path = require('path')
+const webpack = require('webpack');
+
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CopyPlugin = require('copy-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+
+// The path to the CesiumJS source code
+const cesiumSource = 'node_modules/cesium/Source';
+const cesiumWorkers = '../Build/Cesium/Workers';
+const cesiumAssets = '../Build/Cesium/Assets';
 
 module.exports = {
     entry: path.resolve(__dirname, '..', './src/index.js'),
     resolve: {
         extensions: ['.js', '.jsx'],
+        alias: {
+            cesium: path.resolve(__dirname, '..', cesiumSource)
+        },
+        mainFiles: ['index', 'Cesium']
+    },
+    output: {
+        path: path.resolve(__dirname, '..', './build'),
+        filename: 'bundle.js',
+
+        // Needed to compile multiline strings in Cesium
+        sourcePrefix: ''
+    },
+    amd: {
+        // Enable webpack-friendly use of require in Cesium
+        toUrlUndefined: true
     },
     module: {
         rules: [
@@ -32,18 +54,21 @@ module.exports = {
             },
         ],
     },
-    output: {
-        path: path.resolve(__dirname, '..', './build'),
-        filename: 'bundle.js'
-    },
     plugins: [
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, '..', './src/index.html'),
         }),
-        // new CopyPlugin({
-        //     patterns: [
-        //         { from: "src", to: "build"}
-        //     ],
-        // }),
+        // Copy Cesium Assets, Widgets, and Workers to a static directory
+        new CopyWebpackPlugin({
+            patterns: [
+                { from: path.join(cesiumSource, cesiumWorkers), to: 'Workers' },
+                { from: path.join(cesiumSource, cesiumAssets), to: 'Assets' },
+                { from: path.join(cesiumSource, 'Widgets'), to: 'Widgets' }
+            ]
+        }),
+        new webpack.DefinePlugin({
+            // Define relative base path in cesium for loading assets
+            CESIUM_BASE_URL: JSON.stringify('')
+        })
     ],
 }
