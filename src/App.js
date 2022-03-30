@@ -6,7 +6,7 @@ import { Controls, FullScreenControl, ShowCoordinates } from "./ol-map/controls"
 import { Layers, TileLayer } from "./ol-map/layers";
 import { GET_COUNTRIES_ID_BY_NAME, GET_STATES_ID_BY_NAME } from "./graphql/queries/GetCountries";
 import { GET_AIRPORTS_IN_COUNTRY, GET_AIRPORTS_IN_STATE } from "./graphql/queries/GetAirports";
-import { GET_CITIES_IN_COUNTRY, GET_CITIES_IN_STATE } from "./graphql/queries/GetCities";
+import { GET_CITIES_IN_COUNTRY } from "./graphql/queries/GetCities";
 import "./App.css";
 
 // apollo
