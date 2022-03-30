@@ -1,15 +1,15 @@
-.layer-picker{
-    position: absolute;
-    right: 0.5em;
-    top: 2.5em;
-    z-index: 1;
-    background: #ffffff8e;
-    border: 1px solid #0000003f;
-    border-radius: 5px;
-    padding: 5px;
-    font-size: 13px;
+.layer-picker {
+  position: absolute;
+  right: 0.5em;
+  top: 2.5em;
+  z-index: 1;
+  background: #ffffff8e;
+  border: 1px solid #0000003f;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 13px;
 }
 
 .layer-picker p {
-    margin: 5px;
+  margin: 5px;
 }
