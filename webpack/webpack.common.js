@@ -7,7 +7,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 // The path to the CesiumJS source code
 const cesiumSource = 'node_modules/cesium/Source';
 const cesiumWorkers = '../Build/Cesium/Workers';
-const cesiumAssets = '../Build/Cesium/Assets';
 
 module.exports = {
     entry: path.resolve(__dirname, '..', './src/index.js'),
@@ -59,10 +58,11 @@ module.exports = {
             template: path.resolve(__dirname, '..', './src/index.html'),
         }),
         // Copy Cesium Assets, Widgets, and Workers to a static directory
-        new CopyWebpackPlugin({
+        // Copy Cesium Assets, Widgets, and Workers to a static directory
+        new CopyWebpackPlugin({ 
             patterns: [
                 { from: path.join(cesiumSource, cesiumWorkers), to: 'Workers' },
-                { from: path.join(cesiumSource, cesiumAssets), to: 'Assets' },
+                { from: path.join(cesiumSource, 'Assets'), to: 'Assets' },
                 { from: path.join(cesiumSource, 'Widgets'), to: 'Widgets' }
             ]
         }),

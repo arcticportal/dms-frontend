@@ -5,6 +5,7 @@ import MapContext from "../MapContext";
 import { Vector as VectorSource } from "ol/source";
 import WKT from "ol/format/WKT";
 import VectorLayer from "ol/layer/Vector";
+import {Circle, Fill, Style} from 'ol/style';
 
 function convertToWKT(query) {
   if (query) {
@@ -25,7 +26,26 @@ const GetFilteredData = ({ datasetName, filterQuery, resultQuery }) => {
   const [suggestions, setSuggestions] = useState([]);
   const [vectorLayer, setVectorLayer] = useState({});
 
+
   useEffect(() => {
+    // If new source picked from list fetch data (result: data)
+    if (searchText.length > 1) {
+      getDataset({ variables: { name: searchText } });
+    }
+  }, [searchText]);
+
+
+  useEffect(() => {
+    // If new filter data, save it as suggestions variable (result: set suggestions list)
+    if (!data) return;
+    let fetchedData = data.countries ? data.countries : data.states ? data.states : {};
+    console.log(fetchedData);
+    setSuggestions(fetchedData);
+  }, [data]);
+
+
+  useEffect(() => {
+    // If new result data save it as VectorLayer (result: new VectorLayer)
     if (!resultData) return;
     let fetchedResultData = resultData.airports ? resultData.airports : resultData.cities ? resultData.cities : {};
     if (!resultData) return;
@@ -35,13 +55,22 @@ const GetFilteredData = ({ datasetName, filterQuery, resultQuery }) => {
         source: new VectorSource({
           features: convertToWKT(fetchedResultData),
         }),
+        style: new Style({
+            image: new Circle({
+              radius: 5,
+              fill: new Fill({color: 'red'}),
+            }),
+          }),
       })
     );
   }, [resultData]);
 
+
   useEffect(() => {
+    // Display data on map if there is new vector layer (result: display data on map)
     if (!map) return;
     map.addLayer(vectorLayer);
+
     vectorLayer.setZIndex(10);
     console.log(vectorLayer);
     console.log("addLayer");
@@ -53,19 +82,6 @@ const GetFilteredData = ({ datasetName, filterQuery, resultQuery }) => {
     };
   }, [vectorLayer]);
 
-  useEffect(() => {
-    // update representation
-    if (!data) return;
-    let fetchedData = data.countries ? data.countries : data.states ? data.states : {};
-    console.log(fetchedData);
-    setSuggestions(fetchedData);
-  }, [data]);
-
-  useEffect(() => {
-    if (searchText.length > 1) {
-      getDataset({ variables: { name: searchText } });
-    }
-  }, [searchText]);
 
   if (error) return <p>Error fetching data...</p>;
   if (loading) console.log("loading...");

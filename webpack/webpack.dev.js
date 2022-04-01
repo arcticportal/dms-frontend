@@ -6,8 +6,8 @@ module.exports = {
     devServer: {
         hot: true,
     },
-    // devtool: 'cheap-module-source-map', // create-react-app recommends this option for dev
-    devtool: 'eval', // recommended for Cesium
+    devtool: 'cheap-module-source-map', // create-react-app recommends this option for dev
+    // devtool: 'eval', // recommended for Cesium
     plugins: [
         new ReactRefreshWebpackPlugin(),
     ]
