@@ -2,7 +2,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider, HttpLink, from } from "@ap
 import { onError } from "@apollo/client/link/error";
 import MapWrapper from "./ol-map/MapWrapper";
 import { SidebarLeft, ShowAirports, GetCountriesByName, GetFilteredData } from "./ol-map/left-sidebar";
-import { Controls, FullScreenControl, ResetRotation, ShowCoordinates } from "./ol-map/controls";
+import { Controls, FullScreenControl, ResetRotation, ShowCoordinates, ZoomButtons } from "./ol-map/controls";
 import { Layers, TileLayer } from "./ol-map/layers";
 import { GET_COUNTRIES_ID_BY_NAME, GET_STATES_ID_BY_NAME } from "./graphql/queries/GetCountries";
 import { GET_AIRPORTS_IN_COUNTRY, GET_AIRPORTS_IN_STATE } from "./graphql/queries/GetAirports";
@@ -58,6 +58,7 @@ const App = () => {
               <ShowCoordinates />
               <FullScreenControl />
               <ResetRotation />
+              <ZoomButtons />
             </Controls>
           </MapWrapper>
         </ApolloProvider>
