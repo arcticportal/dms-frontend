@@ -1,5 +1,4 @@
 import "./MapWrapper.css";
-import OLCesium from "olcs/OLCesium";
 import React, { useState, useEffect, useRef } from "react";
 
 // openlayers
@@ -28,11 +27,8 @@ const MapWrapper = ({ children, zoom, center }) => {
     let mapObject = new Map(options);
     mapObject.setTarget(mapRef.current);
     setMap(mapObject);
-    return () => {
-      mapObject.setTarget(undefined);
-      // setOl3d(null);
-    };
-  }, []);
+    return () => mapObject.setTarget(undefined);
+  }, [center, zoom]);
 
   // zoom change handler
   useEffect(() => {

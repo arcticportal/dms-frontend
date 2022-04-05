@@ -101,13 +101,16 @@ const GetFilteredData = ({ datasetName, filterQuery, resultQuery }) => {
         {suggestions &&
           suggestions.map((el, i) => (
             <div
+              role="button"
               key={i}
+              tabIndex={0}
               className="suggestion"
               onClick={() => {
                 setSearchText(el.name);
                 setSuggestions([]);
                 getResult({ variables: { pk: el.id } });
               }}
+              onKeyDown={() => {}}
             >
               {el.name}
             </div>

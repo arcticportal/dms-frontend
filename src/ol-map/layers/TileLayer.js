@@ -22,7 +22,6 @@ const TileLayer = ({ source, zIndex = 0 }) => {
   }
   if (pickedLayer === "monochromeLayer") {
     source = XYZ({ url: "https://stamen-tiles.a.ssl.fastly.net/toner/{z}/{x}/{y}.png" });
-  } else {
   }
 
   const handleChange = (e) => {
@@ -45,7 +44,7 @@ const TileLayer = ({ source, zIndex = 0 }) => {
         map.removeLayer(tileLayer);
       }
     };
-  }, [map, source]);
+  }, [map, source, zIndex]);
 
   return (
     <div className="layer-picker">

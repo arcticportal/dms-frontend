@@ -20,7 +20,7 @@ const VectorLayer = ({ source, style, zIndex }) => {
         map.removeLayer(vectorLayer);
       }
     };
-  }, [map]);
+  }, [map, source, style, zIndex]);
 
   return null;
 };

@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import MapContext from "../MapContext";
 import OLCesium from "olcs/OLCesium";
 import * as Cesium from "cesium";
@@ -10,21 +10,21 @@ const Show3D = () => {
   const [ol3d, setOl3d] = useState(null);
 
   const { map } = useContext(MapContext);
-  let spatialMap = null;
+  let spatialMap = useRef();
 
   useEffect(() => {
     if (!map) return;
 
     if (setCesiumSwitch) {
-      spatialMap = new OLCesium({ map: map });
-      spatialMap.setEnabled(cesiumSwitch);
+      spatialMap.current = new OLCesium({ map: map });
+      spatialMap.current.setEnabled(cesiumSwitch);
     } else {
-      spatialMap = null;
+      spatialMap.current = null;
     }
     console.log("3D switch");
     return () => {
-      spatialMap.setEnabled(false);
-      spatialMap = null;
+      spatialMap.current.setEnabled(false);
+      spatialMap.current = null;
     };
   }, [cesiumSwitch]);
 
