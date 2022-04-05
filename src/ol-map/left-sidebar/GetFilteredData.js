@@ -5,7 +5,7 @@ import MapContext from "../MapContext";
 import { Vector as VectorSource } from "ol/source";
 import WKT from "ol/format/WKT";
 import VectorLayer from "ol/layer/Vector";
-import {Circle, Fill, Style} from 'ol/style';
+import {Circle, Fill, Style, Stroke} from 'ol/style';
 
 function convertToWKT(query) {
   if (query) {
@@ -55,12 +55,15 @@ const GetFilteredData = ({ datasetName, filterQuery, resultQuery }) => {
         source: new VectorSource({
           features: convertToWKT(fetchedResultData),
         }),
+        // start style
         style: new Style({
             image: new Circle({
-              radius: 5,
-              fill: new Fill({color: 'red'}),
+              radius: 6,
+              fill: new Fill({color: 'rgba(255, 0, 0, 0.1)'}),
+              stroke: new Stroke({color: 'red', width: 1}),
             }),
           }),
+        //end
       })
     );
   }, [resultData]);

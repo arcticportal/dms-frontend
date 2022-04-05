@@ -7,6 +7,8 @@ import Map from "ol/Map";
 import View from "ol/View";
 import MapContext from "./MapContext";
 import * as Cesium from "cesium";
+import {defaults, DragRotate } from 'ol/interaction';
+import { altKeyOnly } from "ol/events/condition"
 
 window.Cesium = Cesium;
 
@@ -30,10 +32,13 @@ const MapWrapper = ({ children, zoom, center }) => {
   useEffect(() => {
     let options = {
       target: mapRef.current,
-      view: new View({ zoom, center, maxZoom: 17, minZoom: 2, rotation: 0 }),
+      view: new View({ zoom, center, maxZoom: 17, minZoom: 2, rotation: 0}),
       layers: [],
       controls: [],
       overlays: [],
+      interactions: defaults({altShiftDragRotate: false}).extend([
+        new DragRotate({condition: altKeyOnly})
+     ])
     };
     let mapObject = new Map(options);
     mapObject.setTarget(mapRef.current);
@@ -63,14 +68,16 @@ const MapWrapper = ({ children, zoom, center }) => {
   return (
     <MapContext.Provider value={{ map }}>
       <div ref={mapRef} className="ol-map">
-        {children}
-      </div>
       <input
         type="checkbox"
         checked={cesiumSwitch}
         onChange={(e) => setCesiumSwitch(!cesiumSwitch)}
         className="cesium-switch"
       />
+        {children}
+      </div>
+      
+
     </MapContext.Provider>
   );
 };
