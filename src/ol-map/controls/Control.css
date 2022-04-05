@@ -1,46 +1,54 @@
 .ol-rotate {
-    position: absolute;
-    top: 0em;
-    right: 0.5em;
-    transition: opacity .25s linear, visibility 0s linear;
-    z-index: 10;
-  }
-
-.ol-control button {
-    display: block;
-    margin: 1px;
-    padding: 0;
-    color: white;
-    font-weight: bold;
-    text-decoration: none;
-    font-size: inherit;
-    text-align: center;
-    height: 1.375em;
-    width: 1.375em;
-    line-height: .4em;
-    background-color: rgba(0,60,136,0.5);
-    border: none;
-    border-radius: 2px;
+  position: absolute;
+  top: 0em;
+  right: 0.5em;
+  transition: opacity 0.25s linear, visibility 0s linear;
+  z-index: 10;
 }
 
-.ol-control button:hover, .ol-control button:focus {
-    text-decoration: none;
-    background-color: rgba(0,60,136,0.7);
+.ol-control button {
+  display: block;
+  margin: 1px;
+  padding: 0;
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: inherit;
+  text-align: center;
+  height: 1.375em;
+  width: 1.375em;
+  line-height: 0.4em;
+  background-color: rgba(0, 60, 136, 0.5);
+  border: none;
+  border-radius: 2px;
+}
+
+.ol-control button:hover,
+.ol-control button:focus {
+  text-decoration: none;
+  background-color: rgba(0, 60, 136, 0.7);
 }
 
 .ol-compass {
-    display: block;
-    font-weight: normal;
-    font-size: 1.2em;
-    will-change: transform;
+  display: block;
+  font-weight: normal;
+  font-size: 1.2em;
+  will-change: transform;
 }
 
 .ol-control:hover {
-    background-color: rgba(255,255,255,0.6);
+  background-color: rgba(255, 255, 255, 0.6);
 }
 
 .ol-zoom {
-    position: absolute;
-    right: 0.5em;
-    top: 10em;
+  position: absolute;
+  right: 0.5em;
+  top: 10em;
+}
+
+.cesium-switch {
+  position: fixed;
+  top: 1px;
+  left: 1px;
+  z-index: 5;
 }

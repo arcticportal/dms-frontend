@@ -5,7 +5,7 @@ import MapContext from "../MapContext";
 import { Vector as VectorSource } from "ol/source";
 import WKT from "ol/format/WKT";
 import VectorLayer from "ol/layer/Vector";
-import {Circle, Fill, Style, Stroke} from 'ol/style';
+import { Circle, Fill, Style, Stroke } from "ol/style";
 
 function convertToWKT(query) {
   if (query) {
@@ -26,14 +26,12 @@ const GetFilteredData = ({ datasetName, filterQuery, resultQuery }) => {
   const [suggestions, setSuggestions] = useState([]);
   const [vectorLayer, setVectorLayer] = useState({});
 
-
   useEffect(() => {
     // If new source picked from list fetch data (result: data)
     if (searchText.length > 1) {
       getDataset({ variables: { name: searchText } });
     }
   }, [searchText]);
-
 
   useEffect(() => {
     // If new filter data, save it as suggestions variable (result: set suggestions list)
@@ -42,7 +40,6 @@ const GetFilteredData = ({ datasetName, filterQuery, resultQuery }) => {
     console.log(fetchedData);
     setSuggestions(fetchedData);
   }, [data]);
-
 
   useEffect(() => {
     // If new result data save it as VectorLayer (result: new VectorLayer)
@@ -57,17 +54,16 @@ const GetFilteredData = ({ datasetName, filterQuery, resultQuery }) => {
         }),
         // start style
         style: new Style({
-            image: new Circle({
-              radius: 6,
-              fill: new Fill({color: 'rgba(255, 0, 0, 0.1)'}),
-              stroke: new Stroke({color: 'red', width: 1}),
-            }),
+          image: new Circle({
+            radius: 6,
+            fill: new Fill({ color: "rgba(255, 0, 0, 0.1)" }),
+            stroke: new Stroke({ color: "red", width: 1 }),
           }),
+        }),
         //end
       })
     );
   }, [resultData]);
-
 
   useEffect(() => {
     // Display data on map if there is new vector layer (result: display data on map)
@@ -84,7 +80,6 @@ const GetFilteredData = ({ datasetName, filterQuery, resultQuery }) => {
       }
     };
   }, [vectorLayer]);
-
 
   if (error) return <p>Error fetching data...</p>;
   if (loading) console.log("loading...");

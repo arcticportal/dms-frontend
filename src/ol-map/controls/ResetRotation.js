@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import Rotate from 'ol/control/Rotate';
+import Rotate from "ol/control/Rotate";
 import MapContext from "../MapContext";
 
 const ResetRotation = () => {
@@ -8,7 +8,7 @@ const ResetRotation = () => {
   useEffect(() => {
     if (!map) return;
 
-    let resetRotation = new Rotate({tipLabel: "Reset rotation", className: "ol-rotate", autoHide: true})
+    let resetRotation = new Rotate({ tipLabel: "Reset rotation", className: "ol-rotate", autoHide: true });
 
     map.controls.push(resetRotation);
 

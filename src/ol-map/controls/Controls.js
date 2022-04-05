@@ -1,5 +1,5 @@
 import React from "react";
-import "./Control.css"
+import "./Control.css";
 
 const Controls = ({ children }) => {
   return <div>{children}</div>;

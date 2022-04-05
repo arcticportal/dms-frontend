@@ -30,9 +30,14 @@ const SidebarLeft = ({ children }) => {
     <>
       <div className="sidebar-left">
         <span
+          role="button"
+          tabIndex={0}
           ref={node}
           className={isSidebar ? "close" : "hamburger"}
           onClick={() => {
+            openSidebar(isSidebar);
+          }}
+          onKeyDown={() => {
             openSidebar(isSidebar);
           }}
         >
