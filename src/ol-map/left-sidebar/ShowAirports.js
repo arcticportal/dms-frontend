@@ -9,16 +9,30 @@ import VectorLayer from "ol/layer/Vector";
 import { Vector as VectorSource } from "ol/source";
 import WKT from "ol/format/WKT";
 
-// function convertData(query) {
-// 	if (query) {
-// 		return query.map(a => a.point.split("(")[1].split(" ").map((a) => parseFloat(a)))
-// 	} else return []
-// }
+function convertData(items) {
+	if (items) {
+		return items.map(item => {
+      return {...item, geometry: new Point(fromLonLat(item.point.split("(")[1].split(" ").map((p) => parseFloat(p))))}
+    })
+	} else return []
+}
+
+function addMarkers(lonLatArray) {
+	let features = lonLatArray.map((item) => {
+		let feature = new Feature(item);
+		return feature;
+	});
+	console.log(features);
+	return features;
+}
+
 
 // function addMarkers(lonLatArray) {
 // 	let features = lonLatArray.map((item) => {
 // 		let feature = new Feature({
-// 			geometry: new Point(fromLonLat(item)),
+// 			geometry: item.geometry,
+//       name: item.name,
+//       iataCode: item.iataCode
 // 		});
 // 		return feature;
 // 	});
@@ -26,16 +40,16 @@ import WKT from "ol/format/WKT";
 // 	return features;
 // }
 
-function convertToWKT(query) {
-  if (query) {
-    return query.map((a) =>
-      new WKT().readFeature(a.point.split(";")[1], {
-        dataProjection: "EPSG:4326",
-        featureProjection: "EPSG:3857",
-      })
-    );
-  } else return [];
-}
+// function convertToWKT(query) {
+//   if (query) {
+//     return query.map((a) =>
+//       new WKT().writeFeature(new Feature({geometry: new Point(a.point.split(";")[1])}), {
+//         dataProjection: "EPSG:4326",
+//         featureProjection: "EPSG:3857",
+//       })
+//     );
+//   } else return [];
+// }
 
 const ShowAirports = () => {
   const { map } = useContext(MapContext);
@@ -61,12 +75,13 @@ const ShowAirports = () => {
   useEffect(() => {
     // update representation
     if (!data) return;
-    console.log(convertToWKT(data.airports));
+    console.log(data)
+    // console.log(convertToWKT(data.airports));
     setVectorLayer(
       new VectorLayer({
         source: new VectorSource({
-          // features: addMarkers(convertData(data.airports))
-          features: convertToWKT(data.airports),
+          features: addMarkers(convertData(data.airports))
+          // features: convertToWKT(data.airports),
         }),
       })
     );
