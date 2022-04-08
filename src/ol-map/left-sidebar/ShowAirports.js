@@ -7,38 +7,55 @@ import Point from "ol/geom/Point";
 import { fromLonLat } from "ol/proj";
 import VectorLayer from "ol/layer/Vector";
 import { Vector as VectorSource } from "ol/source";
-import WKT from "ol/format/WKT";
+import { Circle, Fill, Stroke, Style } from "ol/style";
+import { DragBox, Select } from "ol/interaction";
+import { altKeyOnly, click, pointerMove } from "ol/events/condition";
 
 function convertData(items) {
-	if (items) {
-		return items.map(item => {
-      return {...item, geometry: new Point(fromLonLat(item.point.split("(")[1].split(" ").map((p) => parseFloat(p))))}
-    })
-	} else return []
+  if (items) {
+    return items.map((item) => {
+      return {
+        ...item,
+        geometry: new Point(
+          fromLonLat(
+            item.point
+              .split("(")[1]
+              .split(" ")
+              .map((p) => parseFloat(p))
+          )
+        ),
+      };
+    });
+  } else return [];
 }
 
 function addMarkers(lonLatArray) {
-	let features = lonLatArray.map((item) => {
-		let feature = new Feature(item);
-		return feature;
-	});
-	console.log(features);
-	return features;
+  let features = lonLatArray.map((item) => {
+    let feature = new Feature(item);
+    return feature;
+  });
+  console.log(features);
+  return features;
 }
 
+const style = new Style({
+  fill: new Fill({
+    color: "#222222",
+  }),
+});
 
-// function addMarkers(lonLatArray) {
-// 	let features = lonLatArray.map((item) => {
-// 		let feature = new Feature({
-// 			geometry: item.geometry,
-//       name: item.name,
-//       iataCode: item.iataCode
-// 		});
-// 		return feature;
-// 	});
-// 	console.log(features);
-// 	return features;
-// }
+const selectedStyle = new Style({
+  image: new Circle({
+    radius: 8,
+    fill: new Fill({ color: "rgba(255, 0, 0, 0.4)" }),
+    stroke: new Stroke({ color: "red", width: 2 }),
+  }),
+});
+
+const select = new Select({
+  condition: click,
+  style: selectedStyle,
+});
 
 // function convertToWKT(query) {
 //   if (query) {
@@ -64,6 +81,7 @@ const ShowAirports = () => {
     map.addLayer(vectorLayer);
     vectorLayer.setZIndex(10);
     console.log("addLayer");
+    map.addInteraction(select);
     return () => {
       if (map) {
         map.removeLayer(vectorLayer);
@@ -75,13 +93,20 @@ const ShowAirports = () => {
   useEffect(() => {
     // update representation
     if (!data) return;
-    console.log(data)
+    console.log(data);
     // console.log(convertToWKT(data.airports));
     setVectorLayer(
       new VectorLayer({
         source: new VectorSource({
-          features: addMarkers(convertData(data.airports))
+          features: addMarkers(convertData(data.airports)),
           // features: convertToWKT(data.airports),
+        }),
+        style: new Style({
+          image: new Circle({
+            radius: 5,
+            fill: new Fill({ color: "rgba(10, 10, 200, 0.1)" }),
+            stroke: new Stroke({ color: "blue", width: 1 }),
+          }),
         }),
       })
     );
